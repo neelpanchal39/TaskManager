@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManager.Views.AddEditTasksPage"
+             xmlns:subView="clr-namespace:TaskManager.SubViews"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:customControls="clr-namespace:TaskManager.CustomControls"
+             xmlns:Vm="clr-namespace:TaskManager.ViewModels"
+             ios:Page.UseSafeArea="True">
+    <ContentPage.BindingContext>
+        <Vm:AddEditTasksViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <StackLayout
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Spacing="25">
+                <subView:HeaderView
+                    BackImageVisible="True"
+                    Title="Task Details"/>
+                <ScrollView VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalScrollBarVisibility="Never">
+                    <StackLayout VerticalOptions="FillAndExpand"
+                                 HorizontalOptions="FillAndExpand"
+                                 Spacing="25"
+                                 Margin="20">
+                        <StackLayout Spacing="10">
+                            <Label Text="Title"
+                                   FontSize="18"
+                                FontFamily="OpenSansSemibold"
+                                   HorizontalOptions="FillAndExpand" />
+                            <!--<Entry Placeholder="Enter Title"
+                                   FontSize="16"
+                                Text="{Binding TaskDetails.Title}"
+                                HorizontalOptions="FillAndExpand"/>-->
+                            <customControls:CustomEntry
+                                Placeholder="Enter Title"
+                                FontSize="16"
+                                Text="{Binding TaskDetails.Title}"
+                                HeightRequest="40"
+                                HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Spacing="10">
+                            <Label
+                                Text="Description"
+                                FontSize="18"
+                                FontFamily="OpenSansSemibold"
+                                HorizontalOptions="FillAndExpand" />
+                            <!--<Entry   Text="{Binding TaskDetails.Description}"
+                                     FontSize="16"
+                                Placeholder="Enter Description"
+                                HorizontalOptions="FillAndExpand"/>-->
+                            <customControls:CustomEntry
+                                FontSize="16"
+                                Text="{Binding TaskDetails.Description}"
+                                Placeholder="Enter Description"
+                                HeightRequest="40"
+                                HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <StackLayout
+                            Spacing="10">
+                            <Label
+                                Text="Status"
+                                FontSize="18"
+                                FontFamily="OpenSansSemibold"
+                                HorizontalOptions="FillAndExpand" />
+                            <Picker
+                                 x:Name="picker"
+                                 Title="Choose Status"
+                                 FontSize="16"
+                                 ItemsSource="{Binding StatusTypes}"
+                                 TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                                 SelectedItem="{Binding TaskDetails.StatusType}"/>
+                        </StackLayout>
+                        <StackLayout
+                            VerticalOptions="EndAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            Spacing="10">
+                            <Button Text="{Binding SaveButtonText}"
+                                FontSize="16"
+                                CornerRadius="10"
+                                Padding="10"
+                                FontFamily="OpenSansSemibold"
+                                Command="{Binding UploadDataCommand}" />
+                            <Button Text="{Binding DeleteButtonText}"
+                                FontSize="16"
+                                CornerRadius="10"
+                                Padding="10"
+                                FontFamily="OpenSansSemibold"
+                                Command="{Binding DeleteDataCommand}"
+                                CommandParameter="{Binding TaskDetails.ID}"/>
+                        </StackLayout>
+
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

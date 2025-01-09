@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManager.Views.HomePage"
+             xmlns:subView="clr-namespace:TaskManager.SubViews"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:customControls="clr-namespace:TaskManager.CustomControls"
+             xmlns:Vm="clr-namespace:TaskManager.ViewModels"
+             ios:Page.UseSafeArea="True">
+    <ContentPage.BindingContext>
+        <Vm:HomeViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="FillAndExpand"
+                         HorizontalOptions="FillAndExpand"
+                         Spacing="25">
+                <subView:HeaderView
+                    BackImageVisible="False"
+                    Title="Home Page"
+                    PlusImageVisible="True"/>
+                <StackLayout
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    Margin="10">
+                    <CollectionView x:Name="TasksList"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalScrollBarVisibility="Never"
+                        EmptyView="No tasks are added!"
+                        ItemsSource="{Binding TaskDetails}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand"
+                                             Margin="0"
+                                             Padding="10">
+                                    <Border
+                                    Margin="0,5,5,5"
+                                    Padding="10"
+                                    StrokeThickness="2"
+                                    BackgroundColor="White"
+                                    Stroke="White"
+                                    VerticalOptions="Start">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10"/>
+                                        </Border.StrokeShape>
+                                        <Border.Shadow>
+                                            <Shadow  Brush="Black"
+                                        Offset="0,0"
+                                        Radius="{OnPlatform Android='30', iOS='7'}"
+                                        Opacity="0.2"/>
+                                        </Border.Shadow>
+                                        <Grid
+                                            RowDefinitions="*,*"
+                                            ColumnDefinitions="*,*"
+                                            Padding="10"
+                                            RowSpacing="10"
+                                            VerticalOptions="FillAndExpand"
+                                            HorizontalOptions="FillAndExpand">
+                                            <StackLayout HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="FillAndExpand"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0">
+                                                <Label Text="{Binding Title}"
+                                                       FontFamily="OpenSansSemibold"
+                                                       FontSize="18"/>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="FillAndExpand"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0">
+                                                <Label Text="{Binding Description}"
+                                                       FontSize="16"/>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="End"
+                                                 VerticalOptions="CenterAndExpand"
+                                                 Grid.Row="0"                                                 
+                                                 Grid.Column="1">
+                                                <Label Text="{Binding StatusType}"
+                                                       TextColor="{Binding StatusColor}"
+                                                       VerticalTextAlignment="Center"
+                                                       FontSize="16"
+                                                       FontFamily="OpenSansSemibold"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Border>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.SelectedTaskCommand, Source={x:Reference TasksList}}" CommandParameter="{Binding .}" ></TapGestureRecognizer>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
